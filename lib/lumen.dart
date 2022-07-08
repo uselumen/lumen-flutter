@@ -4,7 +4,6 @@ library lumen;
 
 import 'dart:io';
 
-import 'package:lumen/constants.dart';
 import 'package:http/http.dart' as http;
 
 class IdentifyData {
@@ -38,11 +37,12 @@ class IdentifyData {
 
 class Lumen {
   final String apiKey;
+  static const _baseUrl = "https://api.uselumen.co/v1";
 
   Lumen(this.apiKey);
 
   Future<void> _request(String url, Map<String, dynamic> payload) async {
-    String absolutePath = apiBaseUrl + url;
+    String absolutePath = _baseUrl + url;
 
     Map<String, String> headers = {
       'Content-Type': 'application/json',
@@ -66,10 +66,10 @@ class Lumen {
       jsonData["platform"] = "ios";
     }
 
-    await _request("/", jsonData);
+    await _request("/customer/identify", jsonData);
   }
 
   Future track(String userId, String event, Map<String, dynamic> data) async {
-    await _request("/", data);
+    await _request("/event/track", data);
   }
 }
