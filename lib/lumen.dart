@@ -1,10 +1,10 @@
 // ignore_for_file: non_constant_identifier_names
 
-library lumen_flutter;
+library lumen;
 
 import 'dart:io';
 
-import 'package:lumen_flutter/constants.dart';
+import 'package:lumen/constants.dart';
 import 'package:http/http.dart' as http;
 
 class IdentifyData {
@@ -12,6 +12,7 @@ class IdentifyData {
   String? last_name;
   String email;
   String? phone_number;
+  String? device_token;
   Map<String, Object>? properties;
 
   IdentifyData(
@@ -19,6 +20,7 @@ class IdentifyData {
       this.first_name,
       this.last_name,
       this.phone_number,
+      this.device_token,
       this.properties});
 
   Map<String, dynamic> toJson() {
@@ -27,34 +29,12 @@ class IdentifyData {
     data["last_name"] = last_name;
     data["email"] = email;
     data["phone_number"] = phone_number;
+    data["device_token"] = device_token;
     data["properties"] = properties;
 
     return data;
   }
 }
-
-// class TrackData {
-//   String identifier;
-//   String? platform;
-//   String? device_id;
-//   Map<String, Object>? properties;
-
-//   TrackData(
-//       {required this.identifier,
-//       this.device_id,
-//       this.platform,
-//       this.properties});
-
-//   Map<String, dynamic> toJson() {
-//     final Map<String, dynamic> data = <String, dynamic>{};
-//     data["identifier"] = identifier;
-//     data["platform"] = platform;
-//     data["device_id"] = device_id;
-//     data["properties"] = properties;
-
-//     return data;
-//   }
-// }
 
 class Lumen {
   final String apiKey;
@@ -77,7 +57,7 @@ class Lumen {
     }
   }
 
-  Future<void> identify(String identifier, IdentifyData data) async {
+  Future<void> identify(String userId, IdentifyData data) async {
     final jsonData = data.toJson();
 
     if (Platform.isAndroid) {
@@ -89,7 +69,7 @@ class Lumen {
     await _request("/", jsonData);
   }
 
-  Future track(String id, String event, Map<String, dynamic> data) async {
+  Future track(String userId, String event, Map<String, dynamic> data) async {
     await _request("/", data);
   }
 }
