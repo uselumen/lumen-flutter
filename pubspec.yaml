@@ -1,7 +1,8 @@
 name: lumen
 description: Flutter plugin for Lumen.
 version: 0.0.1
-homepage:
+homepage: https://uselumen.co
+repository: https://github.com/uselumen/lumen-flutter
 
 environment:
   sdk: ">=2.17.5 <3.0.0"
