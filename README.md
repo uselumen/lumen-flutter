@@ -41,13 +41,14 @@ final identifyData = IdentifyData(
     last_name: "doe",
     phone_number: "07053643618");
 
-lumen.identify("<--unique-identifier-->", identifyData);
+lumen.identify("unique identifier", identifyData);
 ```
 
 ### Track an event
 
 ```dart
-lumen.track("<- uniqueidentifier ->", "<- event-name ->", {"value": "1233"});
+final customTrackProperties = {"value": "1233"};
+lumen.track("unique identifier", "event name ->", customTrackProperties);
 ```
 
 <!--
