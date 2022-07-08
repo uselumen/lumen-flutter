@@ -33,28 +33,28 @@ class IdentifyData {
   }
 }
 
-class TrackData {
-  String identifier;
-  String? platform;
-  String? device_id;
-  Map<String, Object>? properties;
+// class TrackData {
+//   String identifier;
+//   String? platform;
+//   String? device_id;
+//   Map<String, Object>? properties;
 
-  TrackData(
-      {required this.identifier,
-      this.device_id,
-      this.platform,
-      this.properties});
+//   TrackData(
+//       {required this.identifier,
+//       this.device_id,
+//       this.platform,
+//       this.properties});
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data["identifier"] = identifier;
-    data["platform"] = platform;
-    data["device_id"] = device_id;
-    data["properties"] = properties;
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = <String, dynamic>{};
+//     data["identifier"] = identifier;
+//     data["platform"] = platform;
+//     data["device_id"] = device_id;
+//     data["properties"] = properties;
 
-    return data;
-  }
-}
+//     return data;
+//   }
+// }
 
 class Lumen {
   final String apiKey;
@@ -80,16 +80,16 @@ class Lumen {
   Future<void> identify(String identifier, IdentifyData data) async {
     final jsonData = data.toJson();
 
+    if (Platform.isAndroid) {
+      jsonData["platform"] = "android";
+    } else if (Platform.isIOS) {
+      jsonData["platform"] = "ios";
+    }
+
     await _request("/", jsonData);
   }
 
   Future track(String id, String event, Map<String, dynamic> data) async {
-    if (Platform.isAndroid) {
-      data["platform"] = "android";
-    } else if (Platform.isIOS) {
-      data["platform"] = "ios";
-    }
-
     await _request("/", data);
   }
 }

@@ -1,39 +1,58 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Lumen
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+The Lumen JavaScript SDK allows you to seamlessly identify and track user attributes and events on your client. Plus other perks.
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- Identify users
+- Track user events
+- Update user properties
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+- Setup your [Lumen](https://uselumen.co) account.
+- Retrieve your API key
+- Install the plugin
+
+```sh
+flutter pub add
+```
 
 ## Usage
 
+<!--
 TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+to `/example` folder. -->
+
+### Initialize the project
 
 ```dart
-const like = 'sample';
+import 'package:lumen_flutter/lumen_flutter.dart';
+
+final lumen = Lumen("apiKey");
 ```
 
+### Identify a user
+
+```dart
+final identifyData = IdentifyData(
+    email: "johndoe@gmail.com",
+    first_name: "john",
+    last_name: "doe",
+    phone_number: "07053643618");
+
+lumen.identify("<--unique-identifier-->", identifyData);
+```
+
+### Track an event
+
+```dart
+lumen.track("<- uniqueidentifier ->", "<- event-name ->", {"value": "1233"});
+```
+
+<!--
 ## Additional information
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+TODO: Tell users more about the package: where to find more information, how to
+contribute to the package, how to file issues, what response they can expect
+from the package authors, and more. -->

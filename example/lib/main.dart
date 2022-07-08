@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lumen_flutter/lumen_flutter.dart';
 
 void main() {
   runApp(const MyApp());
@@ -49,8 +50,19 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  final lumen = Lumen("apiKey");
 
   void _incrementCounter() {
+    final identifyData = IdentifyData(
+        email: "johndoe@gmail.com",
+        first_name: "john",
+        last_name: "doe",
+        phone_number: "07053643618");
+
+    lumen.identify("identifier", identifyData);
+
+    lumen.track("idenfitier", "Clicked Login", {"value": "1233"});
+
     setState(() {
       // This call to setState tells the Flutter framework that something has
       // changed in this State, which causes it to rerun the build method below
