@@ -93,15 +93,15 @@ class Home extends StatelessWidget {
                 children: [
                   const LargeText(title: "Event Tracking"),
                   CustomButton(
-                      label: "Track 'Clicked 'Add To Cart'",
+                      label: "Track - Clicked 'Add To Cart'",
                       onPressed: () {
                         trackEvent("Clicked 'Add To Cart'",
                             {"sku": "skksosownw", "category": "electronics"});
                       }),
                   CustomButton(
-                      label: "Track 'Clicked Logout'",
+                      label: "Track - Clicked 'Logout'",
                       onPressed: () {
-                        trackEvent("Clicked Logout");
+                        trackEvent("Clicked 'Logout'");
                       }),
                 ],
               )
