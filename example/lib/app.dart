@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:lumen/lumen.dart';
 import 'package:lumen_flutter_example/widgets.dart';
 
-String userId = "popuduhjenjiejbeneeieue";
-String userEmail = "johndoe123@gmail.com";
+String userId = "dhdohejeoeoeee";
+String userEmail = "johndoe1234@example.com";
 String userFirstName = "john";
-String userPhoneNumber = "+2340012345678";
+String userPhoneNumber = "+2340000000001";
+
+Map<String, dynamic> userAtttributes = {
+  "age": 20,
+  "hasCompletedVerification": false
+};
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -31,16 +36,13 @@ class Home extends StatelessWidget {
         userId,
         IdentifyData(
             email: userEmail,
-            first_name: userFirstName,
-            phone_number: userPhoneNumber,
-            properties: {}));
+            firstName: userFirstName,
+            phoneNumber: userPhoneNumber,
+            attributes: userAtttributes));
   }
 
-  trackEvent(String eventName) {
-    Lumen.track(
-      userId,
-      eventName,
-    );
+  trackEvent(String eventName, [Map<String, dynamic> properties = const {}]) {
+    Lumen.track(userId, eventName, properties);
   }
 
   @override
@@ -91,9 +93,10 @@ class Home extends StatelessWidget {
                 children: [
                   const LargeText(title: "Event Tracking"),
                   CustomButton(
-                      label: "Track 'Clicked Login'",
+                      label: "Track 'Clicked 'Add To Cart'",
                       onPressed: () {
-                        trackEvent("Clicked Login");
+                        trackEvent("Clicked 'Add To Cart'",
+                            {"sku": "skksosownw", "category": "electronics"});
                       }),
                   CustomButton(
                       label: "Track 'Clicked Logout'",

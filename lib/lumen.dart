@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names
-
 library lumen;
 
 import 'dart:convert';
@@ -8,29 +6,29 @@ import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class IdentifyData {
-  String? first_name;
-  String? last_name;
+  String? firstName;
+  String? lastName;
   String email;
-  String? phone_number;
-  String? device_id;
-  Map<String, Object>? properties;
+  String? phoneNumber;
+  String? deviceId;
+  Map<String, dynamic>? attributes;
 
   IdentifyData(
       {required this.email,
-      this.first_name,
-      this.last_name,
-      this.phone_number,
-      this.device_id,
-      this.properties});
+      this.firstName,
+      this.lastName,
+      this.phoneNumber,
+      this.deviceId,
+      this.attributes});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data["first_name"] = first_name;
-    data["last_name"] = last_name;
+    data["first_name"] = firstName;
+    data["last_name"] = lastName;
     data["email"] = email;
-    data["phone_number"] = phone_number;
-    data["device_id"] = device_id;
-    data["properties"] = properties;
+    data["phone_number"] = phoneNumber;
+    data["device_id"] = deviceId;
+    data["attributes"] = attributes;
 
     return data;
   }
@@ -52,11 +50,9 @@ class Lumen {
     }
 
     final jsonData = data.toJson();
-
     jsonData["identifier"] = identifier;
 
     _customPrint(" Identifying user '$identifier'");
-
     await _request("/customer/identify", jsonData);
   }
 
@@ -69,9 +65,9 @@ class Lumen {
     Map<String, dynamic> payload = {
       "identifier": identifier,
       "event_name": eventName,
-      "properties": data,
       "source": "flutter-plugin",
       "platform": _getPlatform(),
+      "properties": data,
     };
 
     _customPrint("Sending event '$eventName'");
