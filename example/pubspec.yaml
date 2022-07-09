@@ -1,5 +1,5 @@
-name: example
-description: A new Flutter project.
+name: lumen_flutter_example
+description: Demostrates how to use the lumen plugin
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.

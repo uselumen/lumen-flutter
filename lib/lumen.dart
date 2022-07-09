@@ -3,7 +3,6 @@
 library lumen;
 
 import 'dart:io';
-
 import 'package:http/http.dart' as http;
 
 class IdentifyData {
@@ -36,12 +35,14 @@ class IdentifyData {
 }
 
 class Lumen {
-  final String apiKey;
+  static String apiKey = "";
   static const _baseUrl = "https://api.uselumen.co/v1";
 
-  Lumen(this.apiKey);
+  static void init(String lumenApiKey) {
+    apiKey = lumenApiKey;
+  }
 
-  Future<void> _request(String url, Map<String, dynamic> payload) async {
+  static Future<void> _request(String url, Map<String, dynamic> payload) async {
     String absolutePath = _baseUrl + url;
 
     Map<String, String> headers = {
@@ -57,7 +58,11 @@ class Lumen {
     }
   }
 
-  Future<void> identify(String userId, IdentifyData data) async {
+  static Future<void> identify(String userId, IdentifyData data) async {
+    if (apiKey == "") {
+      throw Exception("Plugin must be initialized before use");
+    }
+
     final jsonData = data.toJson();
 
     if (Platform.isAndroid) {
@@ -69,7 +74,12 @@ class Lumen {
     await _request("/customer/identify", jsonData);
   }
 
-  Future track(String userId, String event, Map<String, dynamic> data) async {
+  static Future track(
+      String userId, String event, Map<String, dynamic> data) async {
+    if (apiKey == "") {
+      throw Exception("Plugin must be initialized before use");
+    }
+
     await _request("/event/track", data);
   }
 }
