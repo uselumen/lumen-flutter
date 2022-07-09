@@ -40,7 +40,7 @@ final identifyData = IdentifyData(
     first_name: "john",
     last_name: "doe",
     phone_number: "0123456789",
-    device_token: "device token");
+    device_id: "device ID");
 
 lumen.identify("unique user identifier", identifyData);
 ```

@@ -64,13 +64,13 @@ class Section extends StatelessWidget {
   }
 }
 
-class TrackButton extends StatelessWidget {
+class CustomButton extends StatelessWidget {
   final String label;
-  final String event;
+  final void Function() onPressed;
 
-  const TrackButton({
+  const CustomButton({
     required this.label,
-    required this.event,
+    required this.onPressed,
     Key? key,
   }) : super(key: key);
 
@@ -78,7 +78,7 @@ class TrackButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return (Section(
         child: ElevatedButton(
-            onPressed: () {},
+            onPressed: onPressed,
             style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(primaryColor)),
             child: Text(label))));

@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:lumen/lumen.dart';
 import 'package:lumen_flutter_example/widgets.dart';
 
+String userId = "popuduhjenjiejbeneeieue";
+String userEmail = "johndoe123@gmail.com";
+String userFirstName = "john";
+String userPhoneNumber = "+2340012345678";
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -22,7 +27,20 @@ class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
 
   identifyUser() {
-    //
+    Lumen.identify(
+        userId,
+        IdentifyData(
+            email: userEmail,
+            first_name: userFirstName,
+            phone_number: userPhoneNumber,
+            properties: {}));
+  }
+
+  trackEvent(String eventName) {
+    Lumen.track(
+      userId,
+      eventName,
+    );
   }
 
   @override
@@ -52,51 +70,40 @@ class Home extends StatelessWidget {
               const Divider(),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  LargeText(title: "User Identification"),
+                children: [
+                  const LargeText(title: "User Identification"),
+                  LabelValueRow(label: "User ID:  ", value: userId),
+                  LabelValueRow(label: "Email:  ", value: userEmail),
+                  LabelValueRow(label: "First Name:  ", value: userFirstName),
                   LabelValueRow(
-                      label: "User ID:  ", value: "IDHDIDOD-DJDODKDJDD-JSJS"),
-                  LabelValueRow(label: "Email:  ", value: "johndoe@gmail.com"),
-                  LabelValueRow(label: "First Name:  ", value: "John"),
-                  LabelValueRow(
-                      label: "Phone Number:  ", value: "+2347053643618"),
-                  TrackButton(label: "Identify User", event: "Omoo"),
+                      label: "Phone Number:  ", value: userPhoneNumber),
+                  CustomButton(
+                    label: "Identify User",
+                    onPressed: () {
+                      identifyUser();
+                    },
+                  ),
                 ],
               ),
               const Divider(),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  LargeText(title: "Event Tracking"),
-                  TrackButton(
-                      label: "Track 'Clicked Login'", event: "Clicked Login"),
-                  TrackButton(
-                      label: "Track 'Clicked Logout'", event: "Clicked Logout"),
+                children: [
+                  const LargeText(title: "Event Tracking"),
+                  CustomButton(
+                      label: "Track 'Clicked Login'",
+                      onPressed: () {
+                        trackEvent("Clicked Login");
+                      }),
+                  CustomButton(
+                      label: "Track 'Clicked Logout'",
+                      onPressed: () {
+                        trackEvent("Clicked Logout");
+                      }),
                 ],
               )
             ],
           )),
     );
   }
-}
-
-void logEvents() {
-  Lumen.init("apiKey");
-
-  // Identify
-
-  final identifyData = IdentifyData(
-      email: "johndoe@example.com", // required
-      first_name: "john",
-      last_name: "doe",
-      phone_number: "0123456789",
-      device_token: "device token");
-
-  Lumen.identify("unique user identifier", identifyData);
-
-  // Track
-
-  final customTrackProperties = {"value": "1233"};
-
-  Lumen.track("unique user identifier", "event name", customTrackProperties);
 }
