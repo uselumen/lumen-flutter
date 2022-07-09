@@ -65,6 +65,7 @@ class Lumen {
       [Map<String, dynamic> data = const {}]) async {
     if (apiKey == "") {
       _customPrint("Plugin must be initialized before use.");
+      return;
     }
 
     Map<String, dynamic> payload = {
@@ -79,8 +80,9 @@ class Lumen {
     await _request("/event/track", payload);
   }
 
-  static Future<void> _request(String url, Map<String, dynamic> payload) async {
-    String absolutePath = _baseUrl + url;
+  static Future<void> _request(
+      String path, Map<String, dynamic> payload) async {
+    String absolutePath = _baseUrl + path;
 
     Map<String, String> headers = {
       'Content-Type': 'application/json',
@@ -101,7 +103,7 @@ class Lumen {
 
   static String _getPlatform() {
     if (Platform.isAndroid) {
-      return "android";
+      return "Android";
     } else if (Platform.isIOS) {
       return "iOS";
     }
