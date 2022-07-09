@@ -7,7 +7,7 @@
 
 # Lumen
 
-The Lumen Flutter plugin allows you to seamlessly identify and track user attributes and events on your app. Plus other perks.
+The Lumen flutter plugin allows you to seamlessly identify and track user attributes and events on your app. Plus other perks.
 
 ## Features
 
@@ -39,12 +39,19 @@ flutter pub add lumen
 TODO: Include short and useful examples for package users. Add longer examples
 to `/example` folder. -->
 
-#### Initialize the project
+#### Initialize the plugin
 
 ```dart
 import 'package:lumen/lumen.dart';
 
-final lumen = Lumen("apiKey");
+const lumenApiKey = "<< your-api-key >>";
+
+void main() {
+  Lumen.init(lumenApiKey);
+
+  runApp(const MyApp());
+}
+
 ```
 
 #### Identify a user
@@ -57,7 +64,7 @@ final identifyData = IdentifyData(
     phone_number: "0123456789",
     device_id: "device ID");
 
-lumen.identify("unique user identifier", identifyData);
+Lumen.identify("<< user-identifier >>", identifyData);
 ```
 
 #### Track an event
@@ -65,7 +72,7 @@ lumen.identify("unique user identifier", identifyData);
 ```dart
 final customTrackProperties = {"value": "1233"};
 
-lumen.track("unique user identifier", "event name", customTrackProperties);
+Lumen.track("<< user-identifier >>", "<< event-name >>", customTrackProperties);
 ```
 
 ## Contributing
