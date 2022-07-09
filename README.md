@@ -68,6 +68,15 @@ final customTrackProperties = {"value": "1233"};
 lumen.track("unique user identifier", "event name", customTrackProperties);
 ```
 
+## Contributing
+
+1. Fork it
+2. Clone your fork (`git clone git@github.com:MY_USERNAME/lumen-flutter.git && cd lumen-flutter`)
+3. Create your feature branch (`git checkout -b my-new-feature`)
+4. Commit your changes (`git commit -am 'feat: Added some feature'`)
+5. Push to the branch (`git push origin my-new-feature`)
+6. Create new Pull Request
+
 <!--
 ## Additional information
 
