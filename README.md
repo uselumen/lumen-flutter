@@ -18,7 +18,15 @@ The Lumen Flutter plugin allows you to seamlessly identify and track user attrib
 ## Getting started
 
 - Setup your [Lumen](https://uselumen.co) account.
-- Retrieve your API key
+
+- Retrieve your API key.
+
+> Follow the steps below to retrieve your api key.
+>
+> - Log in to your lumen dashboard.
+> - Navigate to Settings
+> - Select the API Key tab to view and copy your key.
+
 - Install the plugin
 
 ```sh
