@@ -1,75 +1,121 @@
-// ignore_for_file: non_constant_identifier_names
-
 library lumen;
 
+import 'dart:convert';
 import 'dart:io';
-
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
 class IdentifyData {
-  String? first_name;
-  String? last_name;
+  String? firstName;
+  String? lastName;
   String email;
-  String? phone_number;
-  String? device_token;
-  Map<String, Object>? properties;
+  String? phoneNumber;
+  String? deviceId;
+  Map<String, dynamic>? attributes;
 
   IdentifyData(
       {required this.email,
-      this.first_name,
-      this.last_name,
-      this.phone_number,
-      this.device_token,
-      this.properties});
+      this.firstName,
+      this.lastName,
+      this.phoneNumber,
+      this.deviceId,
+      this.attributes});
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data["first_name"] = first_name;
-    data["last_name"] = last_name;
+    data["first_name"] = firstName;
+    data["last_name"] = lastName;
     data["email"] = email;
-    data["phone_number"] = phone_number;
-    data["device_token"] = device_token;
-    data["properties"] = properties;
+    data["phone_number"] = phoneNumber;
+    data["device_id"] = deviceId;
+    data["attributes"] = attributes;
 
     return data;
   }
 }
 
 class Lumen {
-  final String apiKey;
+  static String apiKey = "";
+  static bool showDebugMessages = true;
   static const _baseUrl = "https://api.uselumen.co/v1";
 
-  Lumen(this.apiKey);
+  static void init(String lumenApiKey, [bool debug = true]) {
+    if (lumenApiKey == "") {
+      throw Exception("API Key is required");
+    }
 
-  Future<void> _request(String url, Map<String, dynamic> payload) async {
-    String absolutePath = _baseUrl + url;
+    apiKey = lumenApiKey;
+    showDebugMessages = debug;
+  }
+
+  static Future<void> identify(String identifier, IdentifyData data) async {
+    if (apiKey == "") {
+      _customPrint("Plugin must be initialized before use.");
+      return;
+    }
+
+    final jsonData = data.toJson();
+    jsonData["identifier"] = identifier;
+
+    _customPrint(" Identifying user '$identifier'");
+    await _request("/customer/identify", jsonData);
+  }
+
+  static Future track(String identifier, String eventName,
+      [Map<String, dynamic> data = const {}]) async {
+    if (apiKey == "") {
+      _customPrint("Plugin must be initialized before use.");
+      return;
+    }
+
+    Map<String, dynamic> payload = {
+      "identifier": identifier,
+      "event_name": eventName,
+      "source": "flutter-plugin",
+      "platform": _getPlatform(),
+      "properties": data,
+    };
+
+    _customPrint("Sending event '$eventName'");
+    await _request("/event/track", payload);
+  }
+
+  static Future<void> _request(
+      String path, Map<String, dynamic> payload) async {
+    String absolutePath = _baseUrl + path;
 
     Map<String, String> headers = {
       'Content-Type': 'application/json',
       "api_key": apiKey,
     };
 
-    final response = await http.post(Uri.parse(absolutePath),
-        body: payload, headers: headers);
+    try {
+      final response = await http.post(Uri.parse(absolutePath),
+          body: jsonEncode(payload), headers: headers);
 
-    if (response.statusCode != 200) {
-      throw Exception("Error fetching data");
+      if (response.statusCode != 200) {
+        throw Exception(response.body.toString());
+      }
+    } catch (e) {
+      _customPrint(e);
     }
   }
 
-  Future<void> identify(String userId, IdentifyData data) async {
-    final jsonData = data.toJson();
-
+  static String _getPlatform() {
     if (Platform.isAndroid) {
-      jsonData["platform"] = "android";
+      return "Android";
     } else if (Platform.isIOS) {
-      jsonData["platform"] = "ios";
+      return "iOS";
     }
-
-    await _request("/customer/identify", jsonData);
+    return "Others";
   }
 
-  Future track(String userId, String event, Map<String, dynamic> data) async {
-    await _request("/event/track", data);
+  static _customPrint(dynamic message, [bool error = false]) {
+    if (!showDebugMessages) return;
+
+    if (kDebugMode) {
+      String messageIcon = error ? "🟥" : "🟦";
+      print("$messageIcon $message");
+    }
   }
 }
