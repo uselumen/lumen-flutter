@@ -40,6 +40,10 @@ class Lumen {
   static const _baseUrl = "https://api.uselumen.co/v1";
 
   static void init(String lumenApiKey, [bool debug = true]) {
+    if (lumenApiKey == "") {
+      throw Exception("API Key is required");
+    }
+
     apiKey = lumenApiKey;
     showDebugMessages = debug;
   }
@@ -60,7 +64,7 @@ class Lumen {
   static Future track(String identifier, String eventName,
       [Map<String, dynamic> data = const {}]) async {
     if (apiKey == "") {
-      throw Exception("Plugin must be initialized before use");
+      _customPrint("Plugin must be initialized before use.");
     }
 
     Map<String, dynamic> payload = {
