@@ -62,6 +62,8 @@ lumen.identify("unique user identifier", identifyData);
 
 #### Track an event
 
+After identifying a user, you can now capture their actions like "Product Clicked" or "Product Viewed".
+
 ```dart
 final customTrackProperties = {"value": "1233"};
 
