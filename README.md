@@ -35,10 +35,6 @@ flutter pub add lumen
 
 ## Usage
 
-<!--
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. -->
-
 #### Initialize the plugin
 
 ```dart
@@ -83,10 +79,3 @@ Lumen.track("<< user-identifier >>", "<< event-name >>", customTrackProperties);
 4. Commit your changes (`git commit -am 'feat: Added some feature'`)
 5. Push to the branch (`git push origin my-new-feature`)
 6. Create new Pull Request
-
-<!--
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more. -->
