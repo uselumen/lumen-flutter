@@ -47,6 +47,7 @@ class Lumen {
   static Future<void> identify(String identifier, IdentifyData data) async {
     if (apiKey == "") {
       _customPrint("Plugin must be initialized before use.");
+      return;
     }
 
     final jsonData = data.toJson();
